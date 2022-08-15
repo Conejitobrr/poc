@@ -5,16 +5,16 @@ import fs from 'fs'
 
 
 global.owner = [
-  ['5219992095479', '👑 Mystic - Creador 👑', true],
-  ['34642467703', '👑 Mystic - Collaborator 1 👑', true],
-  ['50499698072', '👑 Mystic - Collaborator 2 👑', true],
-  ['51940617554', '👑 Mystic - Collaborator 3 👑', true],
-  ['5219992095479'],
-  ['5219991402134'],
-  ['5219993404349'],
-  ['5219996125657']
+  ['51958959882', '👑 Mystic - Creador 👑', true],
+  ['584242590744', '👑 Mystic - Collaborator 1 👑', true],
+  ['50495358190', '👑 Mystic - Collaborator 2 👑', true],
+  ['51900010518', '👑 Mystic - Collaborator 3 👑', true],
+  ['51958959882'],
+  ['51958959882'],
+  ['51958959882'],
+  ['51958959882']
 ] // Cambia los numeros que quieras
-global.suittag = ['5219993404349'] 
+global.suittag = ['51958959882'] 
 global.mods = [] 
 global.prems = [] 
 
@@ -72,7 +72,7 @@ global.APIKeys = { // APIKey Here
 
 // Sticker WM
 global.packname = '(☞ﾟ∀ﾟ)☞'
-global.author = '★𝚃𝚑𝚎 𝙼𝚢𝚜𝚝𝚒𝚌 - 𝙱𝚘𝚝★'
+global.author = '★JoseAVelazco★'
 
 global.wm = '★𝚃𝚑𝚎 𝙼𝚢𝚜𝚝𝚒𝚌 - 𝙱𝚘𝚝★'
 global.igfg = '★𝚃𝚑𝚎 𝙼𝚢𝚜𝚝𝚒𝚌 - 𝙱𝚘𝚝★'
