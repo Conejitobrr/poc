@@ -1,0 +1,111 @@
+let handler = m => m
+handler.all = async function (m) {
+let chat = global.db.data.chats[m.chat]
+
+if (chat.audios && m.text.match(/(Goku|goku)/gi)) {
+let vn = './media/Goku.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+
+if (chat.audios && m.text.match(/(Saoo|saoo)/gi)) {
+let vn = './media/Saoo.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+
+if (chat.audios && m.text.match(/(ricolas|Ricolas)/gi)) {
+let vn = './media/Ricolas.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(ohh|Ohh)/gi)) {
+let vn = './media/Ohh.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+
+if (chat.audios && m.text.match(/(no es jueves|No es jueves)/gi)) {
+let vn = './media/No es jueves.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+
+if (chat.audios && m.text.match(/(no digas|No digas)/gi)) {
+let vn = './media/No digas.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(mis ojos|Mis ojos)/gi)) {
+let vn = './media/Mis ojos.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+
+if (chat.audios && m.text.match(/(miercoles|miércoles|Miercoles|Miércoles)/gi)) {
+let vn = './media/Miercoles.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(mff|Mff)/gi)) {
+let vn = './media/Mff.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(me voy|Me voy)/gi)) {
+let vn = './media/Me voy.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(mamut|Mamut)/gi)) {
+let vn = './media/Mamut.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(martes|Martes)/gi)) {
+let vn = './media/Martes.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(llamaba charly|Llamaba charly)/gi)) {
+let vn = './media/Llamaba charly.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(linda|Linda)/gi)) {
+let vn = './media/Linda.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(dime|Dime|dimelo|Dimelo|dímelo|Dímelo)/gi)) {
+let vn = './media/Dime.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(coger|Coger)/gi)) {
+let vn = './media/Coger.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+ 
+if (chat.audios && m.text.match(/(asco|Asco)/gi)) {
+let vn = './media/Asco.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(yair|Yair)/gi)) {
+let vn = './media/Anco.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(Ya basta|ya basta)/gi)) {
+let vn = './media/Ya basta.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+
+if (chat.audios && m.text.match(/(Telepatía|telepatía|telepatia|Telepatia)/gi)) {
+let vn = './media/Telepatia.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(something|Something)/gi)) {
+let vn = './media/Something.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+ 
+return !0 }
+export default handler
