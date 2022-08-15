@@ -11,6 +11,32 @@ if (chat.audios && m.text.match(/(Saoo|saoo)/gi)) {
 let vn = './media/Saoo.mp3'
 this.sendPresenceUpdate('recording', m.chat)   
 this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(tu no mete|tú no mete|Tu no mete|Tú no mete)/gi)) {
+let vn = './media/Tu no mete.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(brr|Brr)/gi)) {
+let vn = './media/Brr.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+
+if (chat.audios && m.text.match(/(Épico|Epico|epico|épico)/gi)) {
+let vn = './media/Épico.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+
+if (chat.audios && m.text.match(/(Me doxean|me doxean)/gi)) {
+let vn = './media/Me doxean.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+
+if (chat.audios && m.text.match(/(Jejeje|jejeje)/gi)) {
+let vn = './media/Jejeje.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+
 
 if (chat.audios && m.text.match(/(ricolas|Ricolas)/gi)) {
 let vn = './media/Ricolas.mp3'
