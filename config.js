@@ -6,12 +6,9 @@ import fs from 'fs'
 
 global.owner = [
   ['51958959882', '👑 Mystic - Creador 👑', true],
-  ['584242590744', '👑 Mystic - Collaborator 1 👑', true],
-  ['50495358190', '👑 Mystic - Collaborator 2 👑', true],
-  ['51900010518', '👑 Mystic - Collaborator 3 👑', true],
-  ['51958959882'],
-  ['51958959882'],
-  ['51958959882'],
+  ['5493532408055', '👑 Mystic - Creador contacto 👑', true],
+  ['50495358190', '👑 Mystic - Collaborator 1 👑', true],
+  ['51900010518', '👑 Mystic - Collaborator 2 👑', true],
   ['51958959882']
 ] // Cambia los numeros que quieras
 global.suittag = ['51958959882'] 
