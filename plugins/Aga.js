@@ -437,8 +437,8 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
     throw e
   }
 }
-handler.help = ['menu', 'help', '?']
-handler.tags = ['main']
+handler.help = ['Gaaaaa', 'Gaaaaa', '?']
+handler.tags = ['Gaaaaa']
 handler.command = /^(gaaaaa|Gaaaaa|\?)$/i
 handler.owner = false
 handler.mods = false
