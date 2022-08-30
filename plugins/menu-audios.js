@@ -52,6 +52,37 @@ let str = `
 ° ඬ⃟🔊 _UwU_
 ° ඬ⃟🔊 _:c_
 ° ඬ⃟🔊 _a_
+
+  *𝕺𝖙𝖗𝖔𝖘*
+
+° ඬ⃟🔊 _manco
+° ඬ⃟🔊 _Asco
+° ඬ⃟🔊 _Brr
+° ඬ⃟🔊 _Coger
+° ඬ⃟🔊 _Dime
+° ඬ⃟🔊 _Dolor
+° ඬ⃟🔊 _Goku
+° ඬ⃟🔊 _Jejeje
+° ඬ⃟🔊 _Linda
+° ඬ⃟🔊 _Llamaba charly
+° ඬ⃟🔊 _Mamut
+° ඬ⃟🔊 _Martes
+° ඬ⃟🔊 _Me doxean
+° ඬ⃟🔊 _Épico
+° ඬ⃟🔊 _Me voy
+° ඬ⃟🔊 _Miercoles
+° ඬ⃟🔊 _Mff
+° ඬ⃟🔊 _Mis ojos
+° ඬ⃟🔊 _No digas
+° ඬ⃟🔊 _No es jueves
+° ඬ⃟🔊 _Ohh
+° ඬ⃟🔊 _Ricolas
+° ඬ⃟🔊 _Saoo
+° ඬ⃟🔊 _Telepatia
+° ඬ⃟🔊 _Tu no mete
+° ඬ⃟🔊 _Ya basta
+° ඬ⃟🔊 _Épico
+
 `.trim()
 conn.sendHydrated(m.chat, str, wm, pp, 'https://github.com/BrunoSobrino/TheMystic-Bot-MD', '𝙶𝙸𝚃𝙷𝚄𝙱', null, null, [
 ['𝙼𝙴𝙽𝚄 𝙿𝚁𝙸𝙽𝙲𝙸𝙿𝙰𝙻', '/menu']
