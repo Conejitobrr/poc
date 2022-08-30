@@ -55,33 +55,33 @@ let str = `
 
   *𝕺𝖙𝖗𝖔𝖘*
 
-° ඬ⃟🔊 _manco
-° ඬ⃟🔊 _Asco
-° ඬ⃟🔊 _Brr
-° ඬ⃟🔊 _Coger
-° ඬ⃟🔊 _Dime
-° ඬ⃟🔊 _Dolor
-° ඬ⃟🔊 _Goku
-° ඬ⃟🔊 _Jejeje
-° ඬ⃟🔊 _Linda
-° ඬ⃟🔊 _Llamaba charly
-° ඬ⃟🔊 _Mamut
-° ඬ⃟🔊 _Martes
-° ඬ⃟🔊 _Me doxean
-° ඬ⃟🔊 _Épico
-° ඬ⃟🔊 _Me voy
-° ඬ⃟🔊 _Miercoles
-° ඬ⃟🔊 _Mff
-° ඬ⃟🔊 _Mis ojos
-° ඬ⃟🔊 _No digas
-° ඬ⃟🔊 _No es jueves
-° ඬ⃟🔊 _Ohh
-° ඬ⃟🔊 _Ricolas
-° ඬ⃟🔊 _Saoo
-° ඬ⃟🔊 _Telepatia
-° ඬ⃟🔊 _Tu no mete
-° ඬ⃟🔊 _Ya basta
-° ඬ⃟🔊 _Épico
+° ඬ⃟🔊 _manco_
+° ඬ⃟🔊 _Asco_
+° ඬ⃟🔊 _Brr_
+° ඬ⃟🔊 _Coger_
+° ඬ⃟🔊 _Dime_
+° ඬ⃟🔊 _Dolor_
+° ඬ⃟🔊 _Goku_
+° ඬ⃟🔊 _Jejeje_
+° ඬ⃟🔊 _Linda_
+° ඬ⃟🔊 _Llamaba charly_
+° ඬ⃟🔊 _Mamut_
+° ඬ⃟🔊 _Martes_
+° ඬ⃟🔊 _Me doxean_
+° ඬ⃟🔊 _Épico_
+° ඬ⃟🔊 _Me voy_
+° ඬ⃟🔊 _Miercoles_
+° ඬ⃟🔊 _Mff_
+° ඬ⃟🔊 _Mis ojos_
+° ඬ⃟🔊 _No digas_
+° ඬ⃟🔊 _No es jueves_
+° ඬ⃟🔊 _Ohh_
+° ඬ⃟🔊 _Ricolas_
+° ඬ⃟🔊 _Saoo_
+° ඬ⃟🔊 _Telepatia_
+° ඬ⃟🔊 _Tu no mete_
+° ඬ⃟🔊 _Ya basta_
+° ඬ⃟🔊 _Épico_
 
 `.trim()
 conn.sendHydrated(m.chat, str, wm, pp, 'https://github.com/BrunoSobrino/TheMystic-Bot-MD', '𝙶𝙸𝚃𝙷𝚄𝙱', null, null, [
