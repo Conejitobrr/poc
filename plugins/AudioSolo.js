@@ -1,15 +1,11 @@
 import util from 'util'
 import path from 'path'
-
 let handler = async (m, { conn }) => {
 if (!db.data.chats[m.chat].audios && m.isGroup) throw 0
 let vn = './media/Nose.mp3'
-conn.sendFile(m.chat, vn, 'Nose.mp3', null, m, true, {
-type: 'audioMessage', 
-ptt: true 
-})
+conn.sendPresenceUpdate('recording', m.chat)
+conn.sendFile(m.chat, vn, 'Nose.mp3', null, m, true, { type: 'audioMessage', ptt: true })
 }
-handler.command = /^(|Nose||No sé)$/i
-handler.fail = null
-handler.exp = 100
+handler.customPrefix = /nose|Nose|no se|no sé|No sé|No se|No Se|No Sé/
+handler.command = (nose|Nose|no se|no sé|No sé|No se|No Se|No Sé|NOSE?$)/
 export default handler
