@@ -9,7 +9,7 @@ type: 'audioMessage',
 ptt: true 
 })
 }
-handler.command = /^(nose|Nose|no se|no sé|No sé|No se|No Se|No Sé|NOSE)$/i
+handler.command = /^(|Nose||No sé)$/i
 handler.fail = null
 handler.exp = 100
 export default handler
