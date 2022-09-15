@@ -147,6 +147,11 @@ if (chat.audios && m.text.match(/(Pipipi|pipipi|PIPIPI)/gi)) {
 let vn = './media/Pipipi.mp3'
 this.sendPresenceUpdate('recording', m.chat)   
 this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+  
+if (chat.audios && m.text.match(/(tite|Tite)/gi)) {
+let vn = './media/Tite.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
  
 return !0 }
 export default handler
