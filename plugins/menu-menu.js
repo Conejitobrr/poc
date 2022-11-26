@@ -1,53 +1,84 @@
-import fs, { promises } from 'fs'
-import fetch from 'node-fetch'
+import { xpRange } from '../lib/levelling.js'
+const { levelling } = '../lib/levelling.js'
+import PhoneNumber from 'awesome-phonenumber'
+import { promises } from 'fs'
+import { join } from 'path'
 let handler = async (m, { conn, usedPrefix, usedPrefix: _p, __dirname, text }) => {
 try {
 let vn = './media/menu.mp3'
-let pp = imagen4
-let img = await(await fetch('https://www.paidmembershipspro.com/wp-content/uploads/2017/07/PayPal-Express.png')).buffer()
+let pp = './Menu2.jpg'
+let _package = JSON.parse(await promises.readFile(join(__dirname, '../package.json')).catch(_ => ({}))) || {}
+let { exp, limit, level, role } = global.db.data.users[m.sender]
+let { min, xp, max } = xpRange(level, global.multiplier)
+let name = await conn.getName(m.sender)
 let d = new Date(new Date + 3600000)
 let locale = 'es'
+let weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(d / 84600000) % 5]
 let week = d.toLocaleDateString(locale, { weekday: 'long' })
-let date = d.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })
+let date = d.toLocaleDateString(locale, {
+day: 'numeric',
+month: 'long',
+year: 'numeric'
+})
+let dateIslamic = Intl.DateTimeFormat(locale + '-TN-u-ca-islamic', {
+day: 'numeric',
+month: 'long',
+year: 'numeric'
+}).format(d)
+let time = d.toLocaleTimeString(locale, {
+hour: 'numeric',
+minute: 'numeric',
+second: 'numeric'
+})
 let _uptime = process.uptime() * 1000
+let _muptime
+if (process.send) {
+process.send('uptime')
+_muptime = await new Promise(resolve => {
+process.once('message', resolve)
+setTimeout(resolve, 1000)
+}) * 1000
+}
+let muptime = clockString(_muptime)
 let uptime = clockString(_uptime)
-let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length 
-let more = String.fromCharCode(8206)
-let readMore = more.repeat(850)   
-let taguser = '@' + m.sender.split("@s.whatsapp.net")[0]
-let str = `
-*ミ💖 𝙷𝙾𝙻𝙰 ✨${taguser}✨, 𝙰𝚀𝚄𝙸 𝙴𝚂𝚃𝙰 𝙴𝙻 𝙼𝙴𝙽𝚄 𝙲𝙾𝙼𝙿𝙻𝙴𝚃𝙾 𝙳𝙴 𝚃𝙷𝙴 𝙼𝚈𝚂𝚃𝙸𝙲 - 𝙱𝙾𝚃 💖彡*
+let totalreg = Object.keys(global.db.data.users).length
+let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
+let replace = {
+'%': '%',
+p: _p, uptime, muptime,
+me: conn.getName(conn.user.jid),
+npmname: _package.name,
+npmdesc: _package.description,
+version: _package.version,
+exp: exp - min,
+maxexp: xp,
+totalexp: exp,
+xp4levelup: max - exp,
+github: _package.homepage ? _package.homepage.url || _package.homepage : '[unknown github url]',
+level, limit, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, role,
+readmore: readMore
+}
+text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
+ 
+    
 
+let str = `
+*ミ💖 𝙷𝙾𝙻𝙰 ✨${name}✨, 𝙰𝚀𝚄𝙸 𝙴𝚂𝚃𝙰 𝙴𝙻 𝙼𝙴𝙽𝚄 𝙲𝙾𝙼𝙿𝙻𝙴𝚃𝙾 𝙳𝙴 𝚃𝙷𝙴 𝙼𝚈𝚂𝚃𝙸𝙲 - 𝙱𝙾𝚃 💖彡*
 *📅 𝙵𝙴𝙲𝙷𝙰: ${week}, ${date}*
 *📈 𝚃𝙸𝙴𝙼𝙿𝙾 𝙰𝙲𝚃𝙸𝚅𝙾: ${uptime}*
 *📊 𝚄𝚂𝚄𝙰𝚁𝙸𝙾𝚂: ${rtotalreg}*
-${readMore}
-${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${global.conn.user.jid.split`@`[0]}`)}
-
 *<𝕀ℕ𝔽𝕆ℝ𝕄𝔸ℂ𝕀𝕆ℕ 𝔻𝔼𝕃 𝔹𝕆𝕋/>*
-
 ° ඬ ⃟ 💟 _${usedPrefix}grupos_
 ° ඬ ⃟ 💟 _${usedPrefix}estado_
 ° ඬ ⃟ 💟 _${usedPrefix}infobot_
-° ඬ ⃟ 💟 _${usedPrefix}speedtest_
 ° ඬ ⃟ 💟 _${usedPrefix}donar_
 ° ඬ ⃟ 💟 _${usedPrefix}grouplist_
 ° ඬ ⃟ 💟 _${usedPrefix}owner_
 ° ඬ ⃟ 💟 _${usedPrefix}script_
 ° ඬ ⃟ 💟 _Bot_ (𝑢𝑠𝑜 𝑠𝑖𝑛 𝑝𝑟𝑒𝑓𝑖𝑗𝑜)
-
 *<𝕌ℕ𝔼 𝕌ℕ 𝔹𝕆𝕋 𝔸 𝕋𝕌 𝔾ℝ𝕌ℙ𝕆/>*
-
 ° ඬ⃟👽 _${usedPrefix}join *<enlace / link / url>*_
-
-*<𝕊𝔼ℝ𝔹𝕆𝕋 - 𝕁𝔸𝔻𝕀𝔹𝕆𝕋/>*
-
-° ඬ⃟🤖 _${usedPrefix}serbot_
-° ඬ⃟🤖 _${usedPrefix}stop_
-° ඬ⃟🤖 _${usedPrefix}bots_
-
 *<𝕁𝕌𝔼𝔾𝕆𝕊/>*
-
 ° ඬ⃟🎖️ _${usedPrefix}mates *<noob / easy / medium / hard / extreme /impossible /impossible2>*_
 ° ඬ⃟🎖️ _${usedPrefix}ppt *<papel / tijera /piedra>*_
 ° ඬ⃟🎖️ _${usedPrefix}prostituto *<nombre / @tag>*_
@@ -77,9 +108,7 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟🎖️ _${usedPrefix}reto_
 ° ඬ⃟🎖️ _${usedPrefix}cancion_
 ° ඬ⃟🎖️ _${usedPrefix}pista_
-
 *<𝔸ℂ𝕋𝕀𝕍𝔸ℝ 𝕆 𝔻𝔼𝕊𝔸ℂ𝕋𝕀𝕍𝔸ℝ/>*
-
 ° ඬ⃟☑️ _${usedPrefix}enable *welcome*_
 ° ඬ⃟☑️ _${usedPrefix}disable *welcome*_
 ° ඬ⃟☑️ _${usedPrefix}enable *modohorny*_
@@ -100,28 +129,19 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟☑️ _${usedPrefix}disable *antitoxic*_
 ° ඬ⃟☑️ _${usedPrefix}enable *antitraba*_
 ° ඬ⃟☑️ _${usedPrefix}disable *antitraba*_
-° ඬ⃟☑️ _${usedPrefix}enable *antiarabes*_
-° ඬ⃟☑️ _${usedPrefix}disable *antiarabes*_
-
 *<ℝ𝔼ℙ𝕆ℝ𝕋𝔼𝕊 𝔻𝔼 𝔽𝔸𝕃𝕃𝕆𝕊/>*
-
 ° ඬ⃟🔰 _${usedPrefix}reporte *<texto>*_
-
 *<𝔻𝔼𝕊ℂ𝔸ℝ𝔾𝔸𝕊/>*
-
+° ඬ⃟📥 _${usedPrefix}facebook *<enlace / link / url>*_
 ° ඬ⃟📥 _${usedPrefix}instagram *<enlace / link / url>*_
 ° ඬ⃟📥 _${usedPrefix}mediafire *<enlace / link / url>*_
 ° ඬ⃟📥 _${usedPrefix}instagram *<enlace / link / url>*_
 ° ඬ⃟📥 _${usedPrefix}gitclone *<enlace / link / url>*_
+° ඬ⃟📥 _${usedPrefix}stickerpack *<enlace / link / url>*_
 ° ඬ⃟📥 _${usedPrefix}gdrive *<enlace / link / url>*_
 ° ඬ⃟📥 _${usedPrefix}tiktok *<enlace / link / url>*_
 ° ඬ⃟📥 _${usedPrefix}xnxxdl *<enlace / link / url>*_
 ° ඬ⃟📥 _${usedPrefix}xvideosdl *<enlace / link / url>*_
-° ඬ⃟📥 _${usedPrefix}fb *<enlace / link / url>*_
-° ඬ⃟📥 _${usedPrefix}fb2 *<enlace / link / url>*_
-° ඬ⃟📥 _${usedPrefix}fb3 *<enlace / link / url>*_
-° ඬ⃟📥 _${usedPrefix}fb4 *<enlace / link / url>*_
-° ඬ⃟📥 _${usedPrefix}fb5 *<enlace / link / url>*_
 ° ඬ⃟📥 _${usedPrefix}ytmp3 *<enlace / link / url>*_
 ° ඬ⃟📥 _${usedPrefix}ytmp4 *<enlace / link / url>*_
 ° ඬ⃟📥 _${usedPrefix}ytmp3doc *<enlace / link / url>*_
@@ -133,7 +153,6 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟📥 _${usedPrefix}playlist *<texto>*_
 ° ඬ⃟📥 _${usedPrefix}playlist2 *<texto>*_
 ° ඬ⃟📥 _${usedPrefix}spotify *<texto>*_
-° ඬ⃟📥 _${usedPrefix}stickerly *<texto>*_
 ° ඬ⃟📥 _${usedPrefix}ringtone *<texto>*_
 ° ඬ⃟📥 _${usedPrefix}soundcloud *<texto>*_
 ° ඬ⃟📥 _${usedPrefix}imagen *<texto>*_
@@ -144,19 +163,15 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟📥 _${usedPrefix}igstalk *<nombre de usuario>*_
 ° ඬ⃟📥 _${usedPrefix}igstory *<nombre de usuario>*_
 ° ඬ⃟📥 _${usedPrefix}tiktokstalk *<nombre de usuario>*_
-
 *<𝔾ℝ𝕌ℙ𝕆𝕊/>* 
-
 ° ඬ⃟💎 _${usedPrefix}add *<numero>*_
 ° ඬ⃟💎 _${usedPrefix}kick *<@tag>*_
 ° ඬ⃟💎 _${usedPrefix}grupo *<abrir / cerrar>*_
-° ඬ⃟💎 _${usedPrefix}grouptime *<opcion> <tiempo>*_
 ° ඬ⃟💎 _${usedPrefix}promote *<@tag>*_
 ° ඬ⃟💎 _${usedPrefix}demote *<@tag>*_
 ° ඬ⃟💎 _admins *<texto>*_ (𝑢𝑠𝑜 𝑠𝑖𝑛 𝑝𝑟𝑒𝑓𝑖𝑗𝑜)
 ° ඬ⃟💎 _${usedPrefix}demote *<@tag>*_
 ° ඬ⃟💎 _${usedPrefix}infogroup_
-° ඬ⃟💎 _${usedPrefix}resetlink_
 ° ඬ⃟💎 _${usedPrefix}link_
 ° ඬ⃟💎 _${usedPrefix}setname *<texto>*_
 ° ඬ⃟💎 _${usedPrefix}setdesc *<texto>*_
@@ -164,14 +179,9 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟💎 _${usedPrefix}setwelcome *<texto>*_
 ° ඬ⃟💎 _${usedPrefix}setbye *<texto>*_
 ° ඬ⃟💎 _${usedPrefix}hidetag *<texto>*_
-° ඬ⃟💎 _${usedPrefix}warn <@tag>_
-° ඬ⃟💎 _${usedPrefix}unwarn <@tag>_
-° ඬ⃟💎 _${usedPrefix}listwarn_
 ° ඬ⃟💎 _${usedPrefix}fantasmas_
 ° ඬ⃟💎 _${usedPrefix}destraba_
-
 *<ℂ𝕆ℕ𝕍𝔼ℝ𝕋𝕀𝔻𝕆ℝ𝔼𝕊/>*
-
 ° ඬ⃟🧧 _${usedPrefix}togifaud *<responde a un video>*_
 ° ඬ⃟🧧 _${usedPrefix}toimg *<responde a un sticker>*_
 ° ඬ⃟🧧 _${usedPrefix}tomp3 *<responde a un video / nota de voz>*_
@@ -179,9 +189,7 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟🧧 _${usedPrefix}tovideo *<responde a un sticker>*_
 ° ඬ⃟🧧 _${usedPrefix}tourl *<responde a un video / imagen / audio>*_
 ° ඬ⃟🧧 _${usedPrefix}tts es *<texto>*_
-
 *<𝔼𝔽𝔼ℂ𝕋𝕆𝕊 𝕐 𝕃𝕆𝔾𝕆𝕊/>*
-
 ° ඬ⃟🖍️ _${usedPrefix}logos *<efecto> <texto>*_
 ° ඬ⃟🖍️ _${usedPrefix}logocorazon *<texto>*_
 ° ඬ⃟🖍️ _${usedPrefix}logochristmas *<texto>*_
@@ -193,16 +201,11 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟🖍️ _${usedPrefix}itssostupid_
 ° ඬ⃟🖍️ _${usedPrefix}pixelar_
 ° ඬ⃟🖍️ _${usedPrefix}blur_
-
 *<𝔽ℝ𝔸𝕊𝔼𝕊 𝕐 𝕋𝔼𝕏𝕋𝕆𝕊/>*
-
-° ඬ⃟🥀 _${usedPrefix}piropo_
 ° ඬ⃟🥀 _${usedPrefix}consejo_
 ° ඬ⃟🥀 _${usedPrefix}fraseromantica_
 ° ඬ⃟🥀 _${usedPrefix}historiaromantica_
-
 *<ℝ𝔸ℕ𝔻𝕆𝕄/>*
-
 ° ඬ⃟👾 _${usedPrefix}cristianoronaldo_
 ° ඬ⃟👾 _${usedPrefix}messi_
 ° ඬ⃟👾 _${usedPrefix}meme_
@@ -268,9 +271,7 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟👾 _${usedPrefix}sasuke_
 ° ඬ⃟👾 _${usedPrefix}sakura_
 ° ඬ⃟👾 _${usedPrefix}cosplay_
-
 *<ℂ𝕆𝕄𝔸ℕ𝔻𝕆𝕊 +𝟙𝟠/>*
-
 ° ඬ⃟🔞 _${usedPrefix}pack_
 ° ඬ⃟🔞 _${usedPrefix}pack2_
 ° ඬ⃟🔞 _${usedPrefix}pack3_
@@ -284,6 +285,7 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟🔞 _${usedPrefix}panties_
 ° ඬ⃟🔞 _${usedPrefix}pene_
 ° ඬ⃟🔞 _${usedPrefix}porno_
+° ඬ⃟🔞 _${usedPrefix}porno2_
 ° ඬ⃟🔞 _${usedPrefix}randomxxx_
 ° ඬ⃟🔞 _${usedPrefix}pechos_
 ° ඬ⃟🔞 _${usedPrefix}yaoi_
@@ -301,10 +303,8 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟🔞 _${usedPrefix}nsfwero_
 ° ඬ⃟🔞 _${usedPrefix}nsfwfemdom_
 ° ඬ⃟🔞 _${usedPrefix}nsfwglass_
-
 *<𝔼𝔽𝔼ℂ𝕋𝕆𝕊 𝔻𝔼 𝔸𝕌𝔻𝕀𝕆𝕊/>*
 *- 𝚁𝙴𝚂𝙿𝙾𝙽𝙳𝙴 𝙰 𝚄𝙽 𝙰𝚄𝙳𝙸𝙾 𝙾 𝙽𝙾𝚃𝙰 𝙳𝙴 𝚅𝙾𝚉*
-
 ° ඬ⃟🎤 _${usedPrefix}bass_
 ° ඬ⃟🎤 _${usedPrefix}blown_
 ° ඬ⃟🎤 _${usedPrefix}deep_
@@ -317,15 +317,11 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟🎤 _${usedPrefix}slow_
 ° ඬ⃟🎤 _${usedPrefix}smooth_
 ° ඬ⃟🎤 _${usedPrefix}tupai_
-
 *<ℂℍ𝔸𝕋 𝔸ℕ𝕆ℕ𝕀𝕄𝕆/>*
-
 ° ඬ⃟📳 _${usedPrefix}start_
 ° ඬ⃟📳 _${usedPrefix}next_
 ° ඬ⃟📳 _${usedPrefix}leave_
-
 *<𝔹𝕌𝕊ℂ𝔸𝔻𝕆ℝ𝔼𝕊/>*
-
 ° ඬ⃟🔍 _${usedPrefix}stickersearch *<texto>*_
 ° ඬ⃟🔍 _${usedPrefix}xnxxsearch *<texto>*_
 ° ඬ⃟🔍 _${usedPrefix}animeinfo *<texto>*_
@@ -342,12 +338,9 @@ ${(conn.user.jid == global.conn.user.jid ? '' : `Jadibot de: https://wa.me/${glo
 ° ඬ⃟🔍 _${usedPrefix}revdl *<texto>*_
 ° ඬ⃟🔍 _${usedPrefix}toraccino *<texto>*_
 ° ඬ⃟🔍 _${usedPrefix}uapkpro *<texto>*_
-° ඬ⃟🔍 _${usedPrefix}playstore *<texto>*_
-
 *<𝔸𝕌𝔻𝕀𝕆𝕊/>* 
 *- 𝙴𝚂𝙲𝚁𝙸𝙱𝙴 𝙻𝙰𝚂 𝚂𝙸𝙶𝚄𝙸𝙴𝙽𝚃𝙴𝚂 𝙿𝙰𝙻𝙰𝙱𝚁𝙰𝚂 𝙾 𝙵𝚁𝙰𝚂𝙴𝚂 𝚂𝙸𝙽 𝙽𝙸𝙽𝙶𝚄𝙽 𝙿𝚁𝙴𝙵𝙸𝙹𝙾 (#, /, *, .)* 
 _(𝑢𝑠𝑜 𝑠𝑖𝑛 𝑝𝑟𝑒𝑓𝑖𝑗𝑜)_
-
 ° ඬ⃟🔊 _Quien es tu sempai botsito 7w7_
 ° ඬ⃟🔊 _Te diagnostico con gay_
 ° ඬ⃟🔊 _A nadie le importa_
@@ -389,30 +382,20 @@ _(𝑢𝑠𝑜 𝑠𝑖𝑛 𝑝𝑟𝑒𝑓𝑖𝑗𝑜)_
 ° ඬ⃟🔊 _UwU_
 ° ඬ⃟🔊 _:c_
 ° ඬ⃟🔊 _a_
-
 *<ℍ𝔼ℝℝ𝔸𝕄𝕀𝔼ℕ𝕋𝔸𝕊/>*
-° ඬ⃟🛠️ _${usedPrefix}clima *<país> <ciudad>*_
-° ඬ⃟🛠️ _${usedPrefix}encuesta *<texto1|texto2...>*_
 ° ඬ⃟🛠️ _${usedPrefix}afk *<motivo>*_
 ° ඬ⃟🛠️ _${usedPrefix}ocr *<responde a imagen>*_
 ° ඬ⃟🛠️ _${usedPrefix}acortar *<enlace / link / url>*_
 ° ඬ⃟🛠️ _${usedPrefix}calc *<operacion math>*_
 ° ඬ⃟🛠️ _${usedPrefix}del *<respondre a mensaje del Bot>*_
 ° ඬ⃟🛠️ _${usedPrefix}whatmusic *<responde a un audio>*_
-° ඬ⃟🛠️ _${usedPrefix}readqr *<responde a imagen (QR)>*_
-° ඬ⃟🛠️ _${usedPrefix}tamaño *<cantidad> <responde a imagen / video>*_
 ° ඬ⃟🛠️ _${usedPrefix}qrcode *<texto>*_
 ° ඬ⃟🛠️ _${usedPrefix}readmore *<texto1| texto2>*_
 ° ඬ⃟🛠️ _${usedPrefix}spamwa *<numero|texto|cantidad>*_
 ° ඬ⃟🛠️ _${usedPrefix}styletext *<texto>*_
 ° ඬ⃟🛠️ _${usedPrefix}traducir *<texto>*_
-° ඬ⃟🛠️ _${usedPrefix}zoom *<texto>*_
 ° ඬ⃟🛠️ _${usedPrefix}nowa *<numero>*_
-° ඬ⃟🛠️ _${usedPrefix}covid *<pais>*_
-° ඬ⃟🛠️ _${usedPrefix}horario_
-
 *<ℝℙ𝔾 - 𝕃𝕀𝕄𝕀𝕋𝔼𝕊 - 𝔼ℂ𝕆ℕ𝕆𝕄𝕀𝔸/>*
-
 ° ඬ⃟💵 _${usedPrefix}balance_
 ° ඬ⃟💵 _${usedPrefix}claim_
 ° ඬ⃟💵 _${usedPrefix}lb_
@@ -426,14 +409,11 @@ _(𝑢𝑠𝑜 𝑠𝑖𝑛 𝑝𝑟𝑒𝑓𝑖𝑗𝑜)_
 ° ඬ⃟💵 _${usedPrefix}transfer *<tipo> <cantidad> <@tag>*_
 ° ඬ⃟💵 _${usedPrefix}verificar_
 ° ඬ⃟💵 _${usedPrefix}unreg *<numero de serie>*_
-
 *<𝕊𝕋𝕀ℂ𝕂𝔼ℝ𝕊/>*
-
 ° ඬ⃟👽 _${usedPrefix}sticker *<responder a imagen o video>*_
 ° ඬ⃟👽 _${usedPrefix}sticker *<enlace / link / url>*_
 ° ඬ⃟👽 _${usedPrefix}s *<responder a imagen o video>*_
 ° ඬ⃟👽 _${usedPrefix}s *<enlace / link / url>*_
-° ඬ⃟👽 _${usedPrefix}sfull *<responder a imagen o video>*_
 ° ඬ⃟👽 _${usedPrefix}emojimix *<emoji 1>&<emoji 2>*_
 ° ඬ⃟👽 _${usedPrefix}scircle *<responder a imagen>*_
 ° ඬ⃟👽 _${usedPrefix}sremovebg *<responder a imagen>*_
@@ -453,20 +433,8 @@ _(𝑢𝑠𝑜 𝑠𝑖𝑛 𝑝𝑟𝑒𝑓𝑖𝑗𝑜)_
 ° ඬ⃟👽 _${usedPrefix}wm *<packname> <author>*_
 ° ඬ⃟👽 _${usedPrefix}stickermarker *<efecto> <responder a imagen>*_
 ° ඬ⃟👽 _${usedPrefix}stickerfilter *<efecto> <responder a imagen>*_
-
 *<𝕆𝕎ℕ𝔼ℝ 𝕐 𝕄𝕆𝔻𝔼ℝ𝔸𝔻𝕆ℝ𝔼𝕊/>*
-
-° ඬ⃟👑 > *<funcion>*
-° ඬ⃟👑 => *<funcion>*
-° ඬ⃟👑 $ *<funcion>*
-° ඬ⃟👑 _${usedPrefix}setprefix *<prefijo>*_
-° ඬ⃟👑 _${usedPrefix}resetprefix_
-° ඬ⃟👑 _${usedPrefix}autoadmin_
-° ඬ⃟👑 _${usedPrefix}leavegc_
 ° ඬ⃟👑 _${usedPrefix}cajafuerte_
-° ඬ⃟👑 _${usedPrefix}blocklist_
-° ඬ⃟👑 _${usedPrefix}block *<@tag / numero>*_
-° ඬ⃟👑 _${usedPrefix}unblock *<@tag / numero>*_
 ° ඬ⃟👑 _${usedPrefix}enable *restrict*_
 ° ඬ⃟👑 _${usedPrefix}disable *restrict*_
 ° ඬ⃟👑 _${usedPrefix}enable *autoread*_
@@ -486,67 +454,37 @@ _(𝑢𝑠𝑜 𝑠𝑖𝑛 𝑝𝑟𝑒𝑓𝑖𝑗𝑜)_
 ° ඬ⃟👑 _${usedPrefix}unbanchat_
 ° ඬ⃟👑 _${usedPrefix}banuser *<@tag>*_
 ° ඬ⃟👑 _${usedPrefix}unbanuser *<@tag>*_
-° ඬ⃟👑 _${usedPrefix}dardiamantes *<@tag>*_
-° ඬ⃟👑 _${usedPrefix}añadirxp *<@tag>*_
 ° ඬ⃟👑 _${usedPrefix}banuser *<@tag>*_
 ° ඬ⃟👑 _${usedPrefix}bc *<texto>*_
 ° ඬ⃟👑 _${usedPrefix}bcchats *<texto>*_
 ° ඬ⃟👑 _${usedPrefix}bcgc *<texto>*_
-° ඬ⃟👑 _${usedPrefix}bcbot *<texto>*_
 ° ඬ⃟👑 _${usedPrefix}cleartpm_
 ° ඬ⃟👑 _${usedPrefix}restart_
 ° ඬ⃟👑 _${usedPrefix}update_
-° ඬ⃟👑 _${usedPrefix}banlist_
+° ඬ⃟👑 _${usedPrefix}traba1_ 
 ° ඬ⃟👑 _${usedPrefix}addprem *<@tag>*_
 ° ඬ⃟👑 _${usedPrefix}delprem *<@tag>*_
 ° ඬ⃟👑 _${usedPrefix}listprem_
-° ඬ⃟👑 _${usedPrefix}listcmd_
-° ඬ⃟👑 _${usedPrefix}setppbot *<responder a imagen>*_
-° ඬ⃟👑 _${usedPrefix}addcmd *<texto> <responder a sticker/imagen>*_
-° ඬ⃟👑 _${usedPrefix}delcmd *<responder a sticker/imagen con comando o texto asignado>*_
-
-*<𝕄𝔸𝕋𝔸 𝕎ℍ𝔸𝕋𝕊𝔸ℙℙ - 𝕍𝕀ℝ𝕌𝕊/>*
-
-° ඬ⃟☠ _${usedPrefix}crash𝟷_
-° ඬ⃟☠ _${usedPrefix}crash2_
-° ඬ⃟☠ _${usedPrefix}crash3_
-° ඬ⃟☠ _${usedPrefix}crash4_
-° ඬ⃟☠ _${usedPrefix}crash5_
-° ඬ⃟☠ _${usedPrefix}crash6_
-° ඬ⃟☠ _${usedPrefix}crash7_
-° ඬ⃟☠ _${usedPrefix}crash8_
 `.trim()
-let buttons = [
-{ buttonId: '#donar', buttonText: { displayText: '📮 𝙳𝙾𝙽𝙰𝚁 📮' }, type: 1 },
-{ buttonId: '#owner', buttonText: { displayText: '🌹 𝙾𝚆𝙽𝙴𝚁 🌹' }, type: 1 }]
-//{ buttonId: '#infobot', buttonText: { displayText: '🐾 𝙸𝙽𝙵𝙾𝙱𝙾𝚃 🐾' }, type: 1 }]
-let buttonMessage = {
-image: pp,
-caption: str.trim(),
-mentions: [m.sender],
-footer: `*${wm}*`,
-buttons: buttons,
-headerType: 4,
-contextInfo: {
-mentionedJid: [m.sender],
-externalAdReply: {
-showAdAttribution: true,
-mediaType: 'VIDEO',
-mediaUrl: null,
-title: '👑 𝐓𝐇𝐄 𝐌𝐘𝐒𝐓𝐈𝐂 - 𝐁𝐎𝐓 👑',
-body: null,
-thumbnail: img,
-sourceUrl: `https://www.paypal.me/TheShadowBrokers133`
-}}}
-conn.sendMessage(m.chat, buttonMessage, { quoted: m })
-//await conn.sendFile(m.chat, vn, 'menu.mp3', null, m, true, { type: 'audioMessage', ptt: true})
-} catch {
+conn.sendHydrated2(m.chat, str, wm, pp, 'https://www.paypal.me/TheShadowBrokers133', '𝙿𝙰𝚈𝙿𝙰𝙻', 'https://github.com/BrunoSobrino/TheMystic-Bot-MD', '𝙶𝙸𝚃𝙷𝚄𝙱', [
+['📮 𝙳𝙾𝙽𝙰𝚁 📮', '/donasi'],
+['🌹 𝙾𝚆𝙽𝙴𝚁 🌹', '/owner'],
+['🐾 𝙸𝙽𝙵𝙾𝙱𝙾𝚃 🐾', '/infobot']
+], m,)
+//await conn.sendFile(m.chat, vn, 'menu.mp3', null, m, true, {
+//type: 'audioMessage', 
+//ptt: true})
+} catch (e) {
 conn.reply(m.chat, '*[❗𝐈𝐍𝐅𝐎❗] 𝙴𝙻 𝙼𝙴𝙽𝚄 𝚃𝙸𝙴𝙽𝙴 𝚄𝙽 𝙴𝚁𝚁𝙾𝚁 𝚈 𝙽𝙾 𝙵𝚄𝙴 𝙿𝙾𝚂𝙸𝙱𝙻𝙴 𝙴𝙽𝚅𝙸𝙰𝚁𝙻𝙾, 𝚁𝙴𝙿𝙾𝚁𝚃𝙴𝙻𝙾 𝙰𝙻 𝙿𝚁𝙾𝙿𝙸𝙴𝚃𝙰𝚁𝙸𝙾 𝙳𝙴𝙻 𝙱𝙾𝚃*', m)
+throw e
 }}
 handler.command = /^(menu|menú|memu|memú|help|info|comandos|allmenu|2help|menu1.2|ayuda|commands|commandos|cmd)$/i
 handler.exp = 50
 handler.fail = null
 export default handler
+
+const more = String.fromCharCode(8206)
+const readMore = more.repeat(4001)
 function clockString(ms) {
 let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
 let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
