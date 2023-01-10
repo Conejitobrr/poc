@@ -2,6 +2,11 @@ let handler = m => m
 handler.all = async function (m) {
 let chat = global.db.data.chats[m.chat]
 
+if (chat.audios && m.text.match(/(añañin|Añañin)/gi)) {
+let vn = './media/Añañin.mp3'
+this.sendPresenceUpdate('recording', m.chat)   
+this.sendFile(m.chat, vn, 'error.mp3', null, m, true, {type: 'audioMessage', ptt: true})}
+
 if (chat.audios && m.text.match(/(Goku|goku)/gi)) {
 let vn = './media/Goku.mp3'
 this.sendPresenceUpdate('recording', m.chat)   
