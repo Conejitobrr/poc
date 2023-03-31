@@ -48,3 +48,4 @@ lolos: $$('#content > article').text().split('Lolos moderasi pada: ')[1].split('
 cerita: $$('#content > article > p').text()
 }
 resolve(hasil)})})})}
+
