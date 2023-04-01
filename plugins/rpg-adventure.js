@@ -124,4 +124,3 @@ function reward(user = {}) {
     }
     return rewards
 }
-
