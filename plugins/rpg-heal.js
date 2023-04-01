@@ -29,3 +29,4 @@ function isNumber(number) {
 if (!number) return number
 number = parseInt(number)
 return typeof number == 'number' && !isNaN(number)}
+ 
