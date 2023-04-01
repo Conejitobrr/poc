@@ -62,3 +62,4 @@ function msToTime(duration) {
 
   return hours + " Horas " + minutes + " Minutos"
 }
+ 
