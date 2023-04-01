@@ -1,4 +1,4 @@
- creditos a https://github.com/FG98F
+// creditos a https://github.com/FG98F
 let handler = async (m, { conn, isPrems}) => {
 let hasil = Math.floor(Math.random() * 5000)
 let time = global.db.data.users[m.sender].lastwork + 600000
