@@ -89,3 +89,4 @@ return minutes + " m y " + seconds + " s "
 
 function pickRandom(list) {
 return list[Math.floor(Math.random() * list.length)]}
+ 
